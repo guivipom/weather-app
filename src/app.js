@@ -6,6 +6,7 @@ const forecast = require('./utils/forecast')
 const geocode = require('./utils/geocode')
 
 const app = express()
+const port = process.env.PORT || 3001
 
 const location = process.argv[2]
 
@@ -47,19 +48,19 @@ app.get('/help', (req,res)=>{
 
 app.get('/weather', (req, res) => {
 
-    if(!req.query.address){
+    if (!req.query.address) {
         return res.send({
-            error: 'You must provide an address'
+            error: 'You must provide an address!'
         })
     }
     
-    geocode(req.query.address, (error, {latitude, longitude, location_name}={})=> {
+    geocode(req.query.address, (error, {latitude, longitude, location_name} = {})=> {
         if(error){
-            return res.send(error)
+            return res.send({error})
         }
         forecast(latitude, longitude, (error, dataForecast) =>{
             if(error){
-                return res.send(error)
+                return res.send({error})
             }
             res.send({
                 address: req.query.address,
@@ -86,7 +87,7 @@ app.get('/*', (req, res) => {
         name: 'Guillermo'
     })})
 
-app.listen(3001, () => {
+app.listen(port, () => {
     console.log('Server is up on port 3001.')
 })
 
