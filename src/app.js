@@ -39,7 +39,7 @@ app.get('/about', (req,res)=>{
 
 app.get('/help', (req,res)=>{
     res.render('help', {
-        helpMessage: 'This is the help message',
+        helpMessage: 'Use the search bar to find out about current weather around the world!',
         title: 'Weather App',
         name: 'Guillermo'
     })
